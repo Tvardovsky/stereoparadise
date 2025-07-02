@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum
-from sqlalchemy.ext.declarative import declarative_base
+from app.core.database import Base
 import enum
-
-Base = declarative_base()
 
 class UserRole(str, enum.Enum):
     client = "client"
