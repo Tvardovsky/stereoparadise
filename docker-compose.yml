@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=stereo_paradise_db
+      - POSTGRES_PASSWORD=4GjyPcJKTQ2X!
+      - POSTGRES_DB=stereo_db
+
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
