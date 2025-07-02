@@ -6,20 +6,13 @@ from app.schemas.user import UserCreate, UserOut, Token, TokenData
 from app.models.user import User
 from app.services import auth as auth_service
 from app.core import security
-from app.core.database import SessionLocal
+from app.dependencies import get_db
 
 from jose import JWTError, jwt
 from app.core.config import settings
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @router.post("/register", response_model=UserOut)
 def register(user: UserCreate, db: Session = Depends(get_db)):
